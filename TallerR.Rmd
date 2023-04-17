@@ -1,0 +1,94 @@
+---
+title: "Taller: Tutorial R – Distribuciones probabilidad y distribuciones muestrales"
+author: 
+- "Daniel Mauricio Pérez Bolívar - 2200172"
+- "Laura Rodriguez Cala - 2200168"
+output: 
+ rmarkdown::html_notebook:
+   theme: lumen
+---
+
+
+Este es un enlace [R Markdown](http://rmarkdown.rstudio.com) 
+
+
+
+ Incluir ecuaciones
+
+$$p(x) = \int{3dx}$$
+
+donde $p(x)$ corresponde a una función
+
+
+
+# Vectores y funciones en R
+
+### -Construcción de funciones en R
+
+En esta sección se describe la manera en que se pueden crear funciones, su sintáxis y el llamado de la función creada, mediante un ejemplo.
+
+La sintáxis general para la creación de una función es la siguiente
+
+```{r}
+nombre_funcion <- function(arg1, arg2, ... ) {
+        # Código
+}
+```
+
+### - Ejemplo implementación de una función en R
+
+Para este caso, se busca implementar una función que cumple con las siguientes especificaciones:
+
+La función debe recibir un vector de un tamaño mínimo de 8, y calcular los percentiles 20, 40, 60 y 80 utilizando únicamente operaciones sobre vectores y funciones aritméticas. La función debe recibir un vector con los datos numéricos y retornar 
+
+a) percentil 20 (P20)
+
+b) percentil 40 (P40)
+
+c) percentil 60 (P60)
+d) percentil 80 (P80)
+
+
+En primer lugar, se debe tener una noción de cómo se calculan los percentiles y de esta forma comprender cómo se puede implementar la función. 
+Calcular la posición del percentil, conocer el tamaño del vector
+
+
+
+
+Entonces, siguiendo la sintáxis descrita anteriormente se tiene: 
+
+```{r}
+percentiles <- function(x) {
+        l <- length(x)
+        return(l)
+        
+}
+```
+
+
+
+
+Ahora, para verificar que la función realiza los cálculos de forma correcta se tiene la siguiente prueba:
+
+```{r}
+x <- c(12, 6, 67, 34)
+percentiles(x)
+
+```
+
+
+donde como argumento de entrada se tiene el vector con los datos numéricos a partir de los cuales calculará los percentiles
+
+# Distribuciones de probabilidad en R
+### -Funciones de densidad de probabilidad
+### -Función de distribución acumulada
+### -Función cuantil de distribución
+
+
+### -Resolución de problemas (distribuciones de probabilidad)
+
+Con el fin de observar y poner en práctica las funciones que brinda R studio se han elegido dos problemas para analizar y solucionar mediante las fucnciones adecuadas de R.
+
+# Dataframes fuciones de probabilidad
+
+Utilizando las funciones de distribución de probabilidad en el punto anterior se busca generar una serie de dataframes que almacene los valores correspondientes a las tablas de probabilidad de la distribución normal y la distribución t-student (Páginas 1, 3 y 4 de [Tablas de probabilidad](https://estadistica-dma.ulpgc.es/estadFCM/pdf/distribuciones.pdf))
