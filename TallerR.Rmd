@@ -1,12 +1,13 @@
-+--- title: "Taller: Tutorial R -- Distribuciones probabilidad y distribuciones muestrales" author: - "Daniel Mauricio Pérez Bolívar - 2200172" - "Laura Rodriguez Cala - 2200168" output: rmarkdown::html_notebook: theme: lumen ---
-
-Este es un enlace [R Markdown](http://rmarkdown.rstudio.com)
-
-Incluir ecuaciones
-
-$$p(x) = \int{3dx}$$
-
-donde $p(x)$ corresponde a una función
+---
+title: "Taller: Tutorial R – Distribuciones probabilidad y distribuciones muestrales"
+author: 
+- "Daniel Mauricio Pérez Bolívar - 2200172"
+- "Daniel Jair Cañate Velasco - 2200196"
+- "Laura Rodriguez Cala - 2200168"
+output: 
+ rmarkdown::html_notebook:
+   theme: lumen
+---
 
 # Vectores y funciones en R
 
@@ -24,40 +25,77 @@ nombre_funcion <- function(arg1, arg2, ... ) {
 
 ### - Ejemplo implementación de una función en R
 
+
 Para este caso, se busca implementar una función que cumple con las siguientes especificaciones:
 
-La función debe recibir un vector de un tamaño mínimo de 8, y calcular los percentiles 20, 40, 60 y 80 utilizando únicamente operaciones sobre vectores y funciones aritméticas. La función debe recibir un vector con los datos numéricos y retornar
+La función debe recibir un vector de un tamaño mínimo de 8, y calcular los percentiles 20, 40, 60 y 80 utilizando únicamente operaciones sobre vectores y funciones aritméticas. La función debe recibir un vector con los datos numéricos y retornar:
 
-a)  percentil 20 (P20)
+a) percentil 20 (P20)
+b) percentil 40 (P40)
+c) percentil 60 (P60)
+d) percentil 80 (P80)
 
-b)  percentil 40 (P40)
 
-c)  percentil 60 (P60)
+En primer lugar, se debe tener una noción de cómo se calculan los percentiles y de esta forma comprender cómo se puede implementar la función. 
 
-d)  percentil 80 (P80)
 
-En primer lugar, se debe tener una noción de cómo se calculan los percentiles y de esta forma comprender cómo se puede implementar la función. Calcular la posición del percentil, conocer el tamaño del vector
+Conocer el tamaño del vector
+Ordenar los valores de menor a mayor (Usando la función sort)
+Determinar la posición donde se encuentra (Encontrar el índice)
+Cuando da decimal se aproxima al siguiente entero
 
-Entonces, siguiendo la sintáxis descrita anteriormente se tiene:
+Calcular la posición del percentil, conocer el tamaño del vector
+
+
+
+
+Entonces, siguiendo la sintáxis descrita anteriormente se tiene: 
 
 ```{r}
 percentiles <- function(x) {
-        l <- length(x)
-        return(l)
+        lista = c()
+        p <- c(20, 40, 60, 80)
+        p1 <- c('Percentil 20 (P20)', 'Percentil 40 (P40)', 'Percentil 60 (P60)', 'Percentil 80 (P80)')
+        n <- length(x)
+        l <- sort(x)
+        for (i in p) {
+          cc <- (i/100)*n
+          re <- (i*n) %% 100
+          if (re==0) {
+            r <- x [cc] 
+          }
+          else{
+             r <- x [ceiling(cc)]
+          }
+          print(paste('El percentil',i,'es:'))
+          print(r)
+    
+          lista = c(lista, r)
+        }
+        print(lista)
+        print(p)
+        df = data.frame(Percentil= p1, Valor=lista)
+        return(df)
         
 }
 ```
 
+
+
+
+
+
+
 Ahora, para verificar que la función realiza los cálculos de forma correcta se tiene la siguiente prueba:
 
 ```{r}
-x <- c(12, 6, 67, 34)
+x <- c(2,3, 4, 5, 5, 7, 8, 10, 12, 12, 14, 15, 16, 16, 16, 20, 22, 22)
 percentiles(x)
 
 ```
 
-donde como argumento de entrada se tiene el vector con los datos numéricos a partir de los cuales calculará los percentiles
 
+donde como argumento de entrada se tiene el vector con los datos numéricos a partir de los cuales calculará los percentiles
 # Distribuciones de probabilidad en R
 
 ### -Funciones de densidad de probabilidad (PDF)
