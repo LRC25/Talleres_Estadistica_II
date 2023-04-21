@@ -25,31 +25,22 @@ nombre_funcion <- function(arg1, arg2, ... ) {
 
 ### - Ejemplo implementación de una función en R
 
-
 Para este caso, se busca implementar una función que cumple con las siguientes especificaciones:
 
 La función debe recibir un vector de un tamaño mínimo de 8, y calcular los percentiles 20, 40, 60 y 80 utilizando únicamente operaciones sobre vectores y funciones aritméticas. La función debe recibir un vector con los datos numéricos y retornar:
 
-a) percentil 20 (P20)
-b) percentil 40 (P40)
-c) percentil 60 (P60)
-d) percentil 80 (P80)
+a)  percentil 20 (P20)
+b)  percentil 40 (P40)
+c)  percentil 60 (P60)
+d)  percentil 80 (P80)
 
+En primer lugar, se debe tener una noción de cómo se calculan los percentiles y de esta forma comprender cómo se puede implementar la función.
 
-En primer lugar, se debe tener una noción de cómo se calculan los percentiles y de esta forma comprender cómo se puede implementar la función. 
-
-
-Conocer el tamaño del vector
-Ordenar los valores de menor a mayor (Usando la función sort)
-Determinar la posición donde se encuentra (Encontrar el índice)
-Cuando da decimal se aproxima al siguiente entero
+Conocer el tamaño del vector Ordenar los valores de menor a mayor (Usando la función sort) Determinar la posición donde se encuentra (Encontrar el índice) Cuando da decimal se aproxima al siguiente entero
 
 Calcular la posición del percentil, conocer el tamaño del vector
 
-
-
-
-Entonces, siguiendo la sintáxis descrita anteriormente se tiene: 
+Entonces, siguiendo la sintáxis descrita anteriormente se tiene:
 
 ```{r}
 percentiles <- function(x) {
@@ -80,12 +71,6 @@ percentiles <- function(x) {
 }
 ```
 
-
-
-
-
-
-
 Ahora, para verificar que la función realiza los cálculos de forma correcta se tiene la siguiente prueba:
 
 ```{r}
@@ -94,33 +79,90 @@ percentiles(x)
 
 ```
 
-
 donde como argumento de entrada se tiene el vector con los datos numéricos a partir de los cuales calculará los percentiles
+
 # Distribuciones de probabilidad en R
 
-### -Funciones de densidad de probabilidad (PDF)
+Son funciones matemáticas que describen la probabilidad de que una variable aleatoria tome un determinado valor. La integral de la función de densidad de probabilidad sobre un intervalo de valores representa la probabilidad de que la variable este aleatoriamente dentro de ese intervalo. \### -Funciones de densidad de probabilidad (PDF)
 
-Son funciones matemáticas que describen la probabilidad de que una variable aleatoria tome un determinado valor. La integral de la función de densidad de probabilidad sobre un intervalo de valores representa la probabilidad de que la variable este aleatoriamente dentro de ese intervalo. #Función en R Se utiliza esta sintaxis: d<nombre de la distribución> Ejemplo Distribución normal: dnorm(x,mean,sd) Distribución binomial: dbinom(x,size,prob) Distribución tstudent: dt(x,df,ncp) \### -Función de distribución acumulada (CDF) Es la función que indica la probabilidad acumulada de que una variable aleatoria tome un valor menor o igual que un valor dado. La función de distribución acumulada siempre comienza en 0 y termina en 1, y es una función creciente y continua. #Función en R La función CDF maneja una sintaxis similar a la PDF, sin embargo, esta cambia en el prefijo donde ya no es "d" sino el prefijo"p"
+# Función en R
+
+Se utiliza esta sintaxis:
+
+d<nombre de la distribución>
+
+Ejemplo
+
+Distribución normal:
+
+dnorm(x,mean,sd)
+
+Distribución binomial:
+
+dbinom(x,size,prob)
+
+Distribución tstudent:
+
+dt(x,df,ncp)
+
+### -Función de distribución acumulada (CDF)
+
+Es la función que indica la probabilidad acumulada de que una variable aleatoria tome un valor menor o igual que un valor dado. La función de distribución acumulada siempre comienza en 0 y termina en 1, y es una función creciente y continua. #Función en R La función CDF maneja una sintaxis similar a la PDF, sin embargo, esta cambia en el prefijo donde ya no es "d" sino el prefijo"p"
 
 ### -Función cuantil de distribución
 
-Es el inverso de la función de distribución acumulada. Para un valor de probabilidad p, la función cuantil de la distribución devuelve el valor correspondiente de la variable aleatoria. #Función en R La función cuantl maneja una sintaxis similar a la PDF y CDF, sin embargo, esta cambia en el prefijo donde ya no es "d"ni "p" sino el prefijo"q"
+Es el inverso de la función de distribución acumulada. Para un valor de probabilidad p, la función cuantil de la distribución devuelve el valor correspondiente de la variable aleatoria.
+
+# Función en R
+
+La función cuantl maneja una sintaxis similar a la PDF y CDF, sin embargo, esta cambia en el prefijo donde ya no es "d"ni "p" sino el prefijo"q"
 
 ### Distribución de variable continua con distribución exponencial Ejercicio: El tiempo de revisión del motor de un avión sigue una distribución exponencial con media 22 minutos. Encontrar la probabilidad de que el tiempo de revisión sea menor a 10 minutos.
 
+```{r}
+
 pexp(10, rate=1/22, lower.tail=TRUE)
 
-x \<- seq(0, 20, by = 0.1) y \<- pexp(x, rate = 1/22, lower.tail = TRUE) plot(x, y, type = "l", xlab = "x", ylab = "P(X \> x)", main = "Distribución Exponencial") abline(v = 10, col = "red", lty = 2)
+x <- seq(0, 20, by = 0.1)
+y <- pexp(x, rate = 1/22, lower.tail = TRUE)
+plot(x, y, type = "l", xlab = "x", ylab = "P(X > x)", main = "Distribución Exponencial ")
+abline(v = 10, col = "red", lty = 2)
 
--La función pexp calcula la probabilidad acumulada de la distribución exponencial. -El primer argumento es el valor x para el cual se quiere calcular la probabilidad. -El argumento rate es la tasa de la distribución exponencial, que es igual a 1/la media. -El argumento lower.tail indica si se desea calcular la probabilidad acumulada de que la variable aleatoria sea menor o igual a x (TRUE) o mayor que x (FALSE). -Graficar la gráfica utilizando la función plot. -Con abline podeos observar donde corta la grafica cuando x=10 y ahi encontraremos nuestro valor deseado.
+```
+
+-La función pexp calcula la probabilidad acumulada de la distribución exponencial.
+
+-El primer argumento es el valor x para el cual se quiere calcular la probabilidad.
+
+-El argumento rate es la tasa de la distribución exponencial, que es igual a 1/la media.
+
+-El argumento lower.tail indica si se desea calcular la probabilidad acumulada de que la variable aleatoria sea menor o igual a x (TRUE) o mayor que x (FALSE).
+
+-Graficar la gráfica utilizando la función plot.
+
+-Con abline podeos observar donde corta la grafica cuando x=10 y ahi encontraremos nuestro valor deseado.
 
 ### Distribución de variable discreta con distribución exponencial Ejercicio: Una compañía telefónica recibe llamadas a razón de 4 por minuto. calcular la probabilidad de recibir 2 llamadas en un minuto
 
+```{r}
+
 dpois(2, lambda=4)
 
-x \<- seq(0, 5, by = 0.1) y \<- pexp(x, rate = 1/22, lower.tail = TRUE) plot(x, y, type = "l", xlab = "x", ylab = "P(X \> x)", main = "Distribución Exponencial")
+x <- seq(0, 5, by = 0.1)
+y <- pexp(x, rate = 1/22, lower.tail = TRUE)
+plot(x, y, type = "l", xlab = "x", ylab = "P(X > x)", main = "Distribución Exponencial ")
 
--La función dpois calcula la función de densidad de probabilidad de la distribución de Poisson. -El primer argumento es el valor k para el cual se quiere calcular la probabilidad de ocurrencias. -El argumento lambda es el parámetro de la distribución de poisson, que es igual a la media de ocurrencias en este caso 4. -Graficar la gráfica utilizando la función plot. -Nuestro valor encontrado esta en la barra donde k=2
+```
+
+-La función dpois calcula la función de densidad de probabilidad de la distribución de Poisson.
+
+-El primer argumento es el valor k para el cual se quiere calcular la probabilidad de ocurrencias.
+
+-El argumento lambda es el parámetro de la distribución de poisson, que es igual a la media de ocurrencias en este caso 4.
+
+-Graficar la gráfica utilizando la función plot.
+
+-Nuestro valor encontrado esta en la barra donde k=2
 
 # Dataframes fuciones de probabilidad
 
@@ -150,6 +192,11 @@ for (i in 1:41) {
 }
 normal_df <- data.frame(distribucion_normal)
 
+# Se exporta en un archivo csv
+write.csv(normal_df, "normal_df.csv")
+# Se muestra en la pagina
+normal_df
+
 ```
 
 ### -Tabla de distribución T-Student
@@ -160,6 +207,7 @@ normal_df <- data.frame(distribucion_normal)
 distribucion_t = matrix(0, nrow = 120, ncol = 10)
 colnames(distribucion_t) <- c("0.005", "0.01", "0.025", "0.05", "0.1", "0.2", 
                               "0.25", "0.3", "0.4", "0.45")
+rownames(distribucion_t) <- paste0(" ", 1:nrow(distribucion_t))
 valores = c(0.005,0.01,0.025,0.05,0.1,0.2,0.25,0.3,0.4,0.45)
 for (i in 1:120) {
   for (j in 1:10) {
@@ -168,6 +216,10 @@ for (i in 1:120) {
 }
 t_df <- data.frame(distribucion_t)
 
+# Se exporta en un archivo csv
+write.csv(t_df, "t_df.csv")
+# Se muestra en la pagina
+t_df
 ```
 
 ### -Tabla de distribución Chi-Cuadrado
@@ -179,6 +231,7 @@ t_df <- data.frame(distribucion_t)
 distribucion_chi = matrix(0, nrow = 120, ncol = 13)
 colnames(distribucion_chi) <- c("0.995","0.99","0.975","0.95","0.9","0.75","0.5",
                                 "0.25","0.1","0.05","0.025","0.01","0.005")
+rownames(distribucion_chi) <- paste0(" ", 1:nrow(distribucion_chi))
 valores = c(0.995,0.99,0.975,0.95,0.9,0.75,0.5,0.25,0.1,0.05,0.025,0.01,0.005)
 for (i in 1:120) {
   for (j in 1:13) {
@@ -186,5 +239,10 @@ for (i in 1:120) {
   }
 }
 chi_df <- data.frame(distribucion_chi)
+
+# Se exporta en un archivo csv
+write.csv(chi_df, "chi_df.csv")
+# Se muestra en la pagina
+chi_df
 
 ```
