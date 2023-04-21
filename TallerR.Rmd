@@ -11,7 +11,7 @@ output:
 
 # Vectores y funciones en R
 
-### -Construcción de funciones en R
+### - Construcción de funciones en R
 
 En esta sección se describe la manera en que se pueden crear funciones, su sintáxis y el llamado de la función creada. Luego, para una mejor comprensión se planteará un ejemplo.
 
@@ -22,14 +22,12 @@ nombre_funcion <- function(arg1, arg2, ... ) {
         # Código cuerpo de la función
 }
 ```
+
 donde $arg1$... son los parámetros que requiere la función.
 
-Por otro lado, para devolver determinados valores, listas, entre otros tipos de datos, se tiene la función return() a la cual se le pasa el valor u objeto que se desee retornar. 
+Por otro lado, para devolver determinados valores, listas, entre otros tipos de datos, se tiene la función return() a la cual se le pasa el valor u objeto que se desee retornar.
 
 Ahora, una vez implementa una función, ¿cómo se puede hacer uso de dicha función? Para esto es necesario conocer cómo se invocan las funciones, lo cual consiste en escribir el nombre de la función y entre paréntesis pasarle los parámetros requeridos por la respectiva función. Es decir: nombre_funcion(arg1, arg2, ... )
-
-
-
 
 ### - Ejemplo implementación de una función en R
 
@@ -46,15 +44,13 @@ En primer lugar, se debe tener una noción de cómo se calculan los percentiles 
 
 De forma general, se deben tener en cuenta los siguientes anotaciones:
 
--Se debe conocer el tamaño del vector 
+-Se debe conocer el tamaño del vector
 
--Ordenar los valores de menor a mayor (Usando la función sort) 
+-Ordenar los valores de menor a mayor (Usando la función sort)
 
 -Determinar la posición donde se encuentra el percentil que se desee (encontrar el índice), cuando la posición da un valor decimal se aproxima al siguiente entero.
 
 -Una vez se tiene la posición se busca el valor correspondiente a dicha posición, este será el valor del percentil que se desea hallar
-
-
 
 Entonces, siguiendo la sintáxis descrita en el comienzo de la sección se tiene:
 
@@ -84,7 +80,7 @@ percentiles <- function(x) {
 }
 ```
 
-Ahora, para verificar que la función realiza los cálculos de forma correcta se tiene la siguiente prueba:
+Ahora, para verificar que la función realiza los cálculos de forma correcta se tiene la siguiente prueba donde se tiene como argumento de entrada el vector con los datos numéricos (x) a partir de los cuales calculará los percentiles
 
 ```{r}
 x <- c(2,3, 4, 5, 5, 7, 8, 10, 12, 12, 14, 15, 16, 16, 16, 20, 22, 22)
@@ -92,47 +88,48 @@ percentiles(x)
 
 ```
 
-donde se tiene como argumento de entrada el vector con los datos numéricos (x) a partir de los cuales calculará los percentiles
-
 En este caso se retorna un DataFrame para una mejor visualización de los resultados
 
 # Distribuciones de probabilidad en R
 
+## - Funciones de densidad de probabilidad (PDF)
+
 Son funciones matemáticas que describen la probabilidad de que una variable aleatoria tome un determinado valor. La integral de la función de densidad de probabilidad sobre un intervalo de valores representa la probabilidad de que la variable este aleatoriamente dentro de ese intervalo. \### -Funciones de densidad de probabilidad (PDF)
 
-# Función en R
+### Función en R
 
 Se utiliza esta sintaxis:
 
-d<nombre de la distribución>
+d$<nombre de la distribución>$
 
-Ejemplo
+* Ejemplo
 
-Distribución normal:
+  + Distribución normal:
 
-dnorm(x,mean,sd)
+    - dnorm(x, mean, sd)
 
-Distribución binomial:
+  + Distribución binomial:
 
-dbinom(x,size,prob)
+    - dbinom(x, size, prob)
 
-Distribución tstudent:
+  + Distribución tstudent:
 
-dt(x,df,ncp)
+    - dt(x, df, ncp)
 
-### -Función de distribución acumulada (CDF)
+## - Función de distribución acumulada (CDF)
 
 Es la función que indica la probabilidad acumulada de que una variable aleatoria tome un valor menor o igual que un valor dado. La función de distribución acumulada siempre comienza en 0 y termina en 1, y es una función creciente y continua. #Función en R La función CDF maneja una sintaxis similar a la PDF, sin embargo, esta cambia en el prefijo donde ya no es "d" sino el prefijo"p"
 
-### -Función cuantil de distribución
+## - Función cuantil de distribución
 
 Es el inverso de la función de distribución acumulada. Para un valor de probabilidad p, la función cuantil de la distribución devuelve el valor correspondiente de la variable aleatoria.
 
-# Función en R
+### Función en R
 
 La función cuantl maneja una sintaxis similar a la PDF y CDF, sin embargo, esta cambia en el prefijo donde ya no es "d"ni "p" sino el prefijo"q"
 
-### Distribución de variable continua con distribución exponencial Ejercicio: El tiempo de revisión del motor de un avión sigue una distribución exponencial con media 22 minutos. Encontrar la probabilidad de que el tiempo de revisión sea menor a 10 minutos.
+## Distribución de variable continua con distribución exponencial Ejercicio: 
+El tiempo de revisión del motor de un avión sigue una distribución exponencial con media 22 minutos. Encontrar la probabilidad de que el tiempo de revisión sea menor a 10 minutos.
 
 ```{r}
 
@@ -157,7 +154,10 @@ abline(v = 10, col = "red", lty = 2)
 
 -Con abline podeos observar donde corta la grafica cuando x=10 y ahi encontraremos nuestro valor deseado.
 
-### Distribución de variable discreta con distribución exponencial Ejercicio: Una compañía telefónica recibe llamadas a razón de 4 por minuto. calcular la probabilidad de recibir 2 llamadas en un minuto
+$Rta:$ La probabilidad de que el tiempo de revisión sea menos a 10 minutos es 36%.
+
+## Distribución de variable discreta con distribución exponencial Ejercicio: 
+Una compañía telefónica recibe llamadas a razón de 4 por minuto. calcular la probabilidad de recibir 2 llamadas en un minuto
 
 ```{r}
 
@@ -180,6 +180,8 @@ plot(x, y, type = "l", xlab = "x", ylab = "P(X > x)", main = "Distribución Expo
 -Nuestro valor encontrado esta en la barra donde k=2
 
 # Dataframes fuciones de probabilidad
+
+$Rta:$ La probabilidad de recibir 2 llamadas en un minuto des de 14%.
 
 Utilizando las funciones de distribución de probabilidad en el punto anterior se busca generar una serie de dataframes que almacene los valores correspondientes a las tablas de probabilidad de la distribución normal y la distribución t-student (Páginas 1, 3 y 4 de [Tablas de probabilidad](https://estadistica-dma.ulpgc.es/estadFCM/pdf/distribuciones.pdf))
 
