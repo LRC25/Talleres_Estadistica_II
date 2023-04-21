@@ -13,15 +13,23 @@ output:
 
 ### -Construcción de funciones en R
 
-En esta sección se describe la manera en que se pueden crear funciones, su sintáxis y el llamado de la función creada, mediante un ejemplo.
+En esta sección se describe la manera en que se pueden crear funciones, su sintáxis y el llamado de la función creada. Luego, para una mejor comprensión se planteará un ejemplo.
 
-La sintáxis general para la creación de una función es la siguiente
+En primer lugar, la sintáxis general para la creación de una función es la siguiente:
 
 ```{r}
 nombre_funcion <- function(arg1, arg2, ... ) {
-        # Código
+        # Código cuerpo de la función
 }
 ```
+donde $arg1$... son los parámetros que requiere la función.
+
+Por otro lado, para devolver determinados valores, listas, entre otros tipos de datos, se tiene la función return() a la cual se le pasa el valor u objeto que se desee retornar. 
+
+Ahora, una vez implementa una función, ¿cómo se puede hacer uso de dicha función? Para esto es necesario conocer cómo se invocan las funciones, lo cual consiste en escribir el nombre de la función y entre paréntesis pasarle los parámetros requeridos por la respectiva función. Es decir: nombre_funcion(arg1, arg2, ... )
+
+
+
 
 ### - Ejemplo implementación de una función en R
 
@@ -36,37 +44,42 @@ d)  percentil 80 (P80)
 
 En primer lugar, se debe tener una noción de cómo se calculan los percentiles y de esta forma comprender cómo se puede implementar la función.
 
-Conocer el tamaño del vector Ordenar los valores de menor a mayor (Usando la función sort) Determinar la posición donde se encuentra (Encontrar el índice) Cuando da decimal se aproxima al siguiente entero
+De forma general, se deben tener en cuenta los siguientes anotaciones:
 
-Calcular la posición del percentil, conocer el tamaño del vector
+-Se debe conocer el tamaño del vector 
 
-Entonces, siguiendo la sintáxis descrita anteriormente se tiene:
+-Ordenar los valores de menor a mayor (Usando la función sort) 
+
+-Determinar la posición donde se encuentra el percentil que se desee (encontrar el índice), cuando la posición da un valor decimal se aproxima al siguiente entero.
+
+-Una vez se tiene la posición se busca el valor correspondiente a dicha posición, este será el valor del percentil que se desea hallar
+
+
+
+Entonces, siguiendo la sintáxis descrita en el comienzo de la sección se tiene:
 
 ```{r}
 percentiles <- function(x) {
-        lista = c()
-        p <- c(20, 40, 60, 80)
-        p1 <- c('Percentil 20 (P20)', 'Percentil 40 (P40)', 'Percentil 60 (P60)', 'Percentil 80 (P80)')
-        n <- length(x)
-        l <- sort(x)
-        for (i in p) {
-          cc <- (i/100)*n
-          re <- (i*n) %% 100
+        resultado = c()
+        p <- c(20, 40, 60, 80) #Vector con los valores de los percentiles a calcular
+        n <- length(x) #Calcular tamaño del vector, número de elementos
+        l <- sort(x) #Ordenar de forma ascendente los valores
+        for (i in p) {  #Ciclo para calcular cada uno de los percentiles
+          cc <- (i/100)*n #Calcular la posición
+          re <- (i*n) %% 100 #Mirar si la posición da un valor entero
           if (re==0) {
-            r <- x [cc] 
+            r <- x [cc] #Buscar el valor correspondiente a dicha posición
           }
-          else{
-             r <- x [ceiling(cc)]
+          else{                   # Se tiene un número decimal
+             r <- x [ceiling(cc)] #Aproximar al entero siguiente
           }
-          print(paste('El percentil',i,'es:'))
-          print(r)
     
-          lista = c(lista, r)
+          resultado = c(resultado, r) #Guardar el valor del percentil en el vector de resultados
         }
-        print(lista)
-        print(p)
-        df = data.frame(Percentil= p1, Valor=lista)
-        return(df)
+        p1 <- c('Percentil 20 (P20)', 'Percentil 40 (P40)', 'Percentil 60 (P60)', 'Percentil 80 (P80)')
+        df = data.frame(Percentil= p1, Valor=resultado)
+        
+        return(df) #Retornar el DataFrame con los percentiles correspondientes
         
 }
 ```
@@ -79,7 +92,9 @@ percentiles(x)
 
 ```
 
-donde como argumento de entrada se tiene el vector con los datos numéricos a partir de los cuales calculará los percentiles
+donde se tiene como argumento de entrada el vector con los datos numéricos (x) a partir de los cuales calculará los percentiles
+
+En este caso se retorna un DataFrame para una mejor visualización de los resultados
 
 # Distribuciones de probabilidad en R
 
