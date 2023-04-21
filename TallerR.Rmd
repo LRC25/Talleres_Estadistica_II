@@ -48,7 +48,16 @@ De forma general, se deben tener en cuenta los siguientes anotaciones:
 
 -Ordenar los valores de menor a mayor (Usando la función sort)
 
--Determinar la posición donde se encuentra el percentil que se desee (encontrar el índice), cuando la posición da un valor decimal se aproxima al siguiente entero.
+-Determinar la posición donde se encuentra el percentil que se desee (encontrar el índice), cuando la posición da un valor decimal se aproxima al siguiente entero. La posición se determina de la forma:
+ $i= \frac{n\cdot k} {100}$
+ 
+ donde $n$, es la cantidad de elementos y $k$ se refiere al percentil a calcular
+
+Si la posición da un valor entero entonces se calcula el promedio del valor correspondiente a la posición encontrada (i) y el valor siguiente (i+1) de dicha posición:
+
+$P= \frac{x_o(i)+x_o(i+1)} {2}$
+
+donde $x_o$ es el vector ordenado de los datos
 
 -Una vez se tiene la posición se busca el valor correspondiente a dicha posición, este será el valor del percentil que se desea hallar
 
@@ -59,18 +68,20 @@ percentiles <- function(x) {
         resultado = c()
         p <- c(20, 40, 60, 80) #Vector con los valores de los percentiles a calcular
         n <- length(x) #Calcular tamaño del vector, número de elementos
-        l <- sort(x) #Ordenar de forma ascendente los valores
+        x_o <- sort(x) #Ordenar de forma ascendente los valores
         for (i in p) {  #Ciclo para calcular cada uno de los percentiles
           cc <- (i/100)*n #Calcular la posición
-          re <- (i*n) %% 100 #Mirar si la posición da un valor entero
+          re <- (i*n) %% 100 #Mirar si la posición da un valor entero (calcula el mpodulo)
           if (re==0) {
-            r <- x [cc] #Buscar el valor correspondiente a dicha posición
+            r <- (x_o [cc] + x_o [cc+1])/2 #Calcular el promedio
           }
           else{                   # Se tiene un número decimal
-             r <- x [ceiling(cc)] #Aproximar al entero siguiente
+             r <- l [ceiling(cc)] #Aproximar al entero siguiente
+             
           }
     
           resultado = c(resultado, r) #Guardar el valor del percentil en el vector de resultados
+        
         }
         p1 <- c('Percentil 20 (P20)', 'Percentil 40 (P40)', 'Percentil 60 (P60)', 'Percentil 80 (P80)')
         df = data.frame(Percentil= p1, Valor=resultado)
@@ -83,8 +94,15 @@ percentiles <- function(x) {
 Ahora, para verificar que la función realiza los cálculos de forma correcta se tiene la siguiente prueba donde se tiene como argumento de entrada el vector con los datos numéricos (x) a partir de los cuales calculará los percentiles
 
 ```{r}
-x <- c(2,3, 4, 5, 5, 7, 8, 10, 12, 12, 14, 15, 16, 16, 16, 20, 22, 22)
+x <- c(2,3, 4, 5, 12, 12, 4, 12, 31, 2, 13, 13, 21, 34, 20, 22, 22, 12, 23, 35)
+y <- c(10,11, 11, 12, 12, 13, 13, 13, 14, 15, 17, 18, 20)
 percentiles(x)
+percentil <- quantile(x, probs = c(.20,.40,.60,.80))
+percentil[1]
+percentil[2]
+percentil[3]
+percentil[4]
+
 
 ```
 
