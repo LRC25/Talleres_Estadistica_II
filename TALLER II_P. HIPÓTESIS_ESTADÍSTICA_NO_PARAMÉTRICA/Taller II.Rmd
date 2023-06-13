@@ -24,10 +24,40 @@ colesterol de los participantes. A un grupo de tratamiento que consta de 15 pers
 | 151 132 196 195 188 198 187 168 115 165 137 208 133 217 191 193 140 146 |
 
 
+
+
+
+
 **a)** ¿Podemos concluir, a un nivel de significancia del 5%, que el nivel de colesterol promedio se redujo gracias al programa? Haga la prueba adecuada en las medias. Utilice una prueba paramétrica
+
+Comparación de medias de dos poblaciones
+
+
+ $\alpha=0.05$
+ 
+ Hipótesis Nula:
+ $$H_0:{\mu}_1={\mu}_2$$
+ Hipótesis alternativa:
+ $$H_0:{\mu}_1<{\mu}_2$$
+
+```{r}
+tratamiento <- c(129, 131, 154, 172, 115, 126, 175, 191, 122, 238, 159, 156, 176, 175, 126)
+
+control <- c(151, 132, 196, 195, 188, 198, 187, 168, 115, 165, 137, 208, 133, 217, 191, 193, 140, 146)
+
+
+m_tratamiento = mean(tratamiento)
+sd_tratamiento = sd(tratamiento)
+m_control = mean(control)
+sd_control = sd(control)
+print(m_tratamiento)
+print(sd_control)
+```
 
 
 **b)** ¿Podemos concluir, a un nivel de significancia del 5%, que el nivel de colesterol promedio se redujo gracias al programa? Haga la prueba adecuada en las medias.Utilice una prueba no paramétrica
+
+Suma de rangos
 
 **c)** Compare los dos métodos en los numerales a, b. Concluya al respecto
 
