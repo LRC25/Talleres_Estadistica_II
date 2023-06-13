@@ -1,0 +1,57 @@
+---
+title: "Taller: Prueba de hipótesis y Estadística no Paramétrica"
+author: 
+- "Daniel Mauricio Pérez Bolívar - 2200172"
+- "Daniel Jair Cañate Velasco - 2200196"
+- "Laura Rodriguez Cala - 2200168"
+output: 
+ rmarkdown::html_notebook:
+   theme: lumen
+---
+
+
+### Primer ejercicio
+
+El Departamento de Salud y Educación Física de Virginia Tech realizó un estudio para determinar si 8 semanas de entrenamiento realmente reducen los niveles de
+colesterol de los participantes. A un grupo de tratamiento que consta de 15 personas se les dieron conferencias dos veces a la semana acerca de cómo reducir sus niveles de colesterol. Otro grupo de 18 personas, de edad similar, fue seleccionado al azar como grupo de control. Se registraron los siguientes niveles de colesterol de todos los participantes al final del programa de 8 semanas:
+
+| Tratamiento                         |
+|:-----------------------------------------------------------:|
+| 129 131 154 172 115 126 175 191 122 238 159 156 176 175 126 |
+
+| Control                         |
+|:-----------------------------------------------------------:|
+| 151 132 196 195 188 198 187 168 115 165 137 208 133 217 191 193 140 146 |
+
+
+**a)** ¿Podemos concluir, a un nivel de significancia del 5%, que el nivel de colesterol promedio se redujo gracias al programa? Haga la prueba adecuada en las medias. Utilice una prueba paramétrica
+
+
+**b)** ¿Podemos concluir, a un nivel de significancia del 5%, que el nivel de colesterol promedio se redujo gracias al programa? Haga la prueba adecuada en las medias.Utilice una prueba no paramétrica
+
+**c)** Compare los dos métodos en los numerales a, b. Concluya al respecto
+
+
+### Segundo ejercicio
+
+Puede encontrar un conjunto de datos que proporciona información sobre los ingresos de los ciudadanos estadounidenses en el archivo de datos de aprendizaje automático de UC Irvine, en http://archive.ics.uci.edu/ml/datasets/Adult. Cada elemento consta de un conjunto de características numéricas y categóricas que describen a una persona, junto con si su ingreso anual es mayor o menor a $50K.
+
+**a)** Evalúe la evidencia de que la categoría de ingresos es independiente del sexo
+
+**b)** Evalúe la evidencia de que la categoría de ingresos es independiente del nivel educativo.
+
+
+### Tercer ejercicio
+
+Un famoso político, conocido por usar palabrotas, da una charla. Escuchas la charla, y para cada uno de los 30 intervalos de 1 minuto de duración, registras el número de palabrotas. Usted registra esto como un histograma (es decir, usted cuente el número de intervalos con cero palabrotas, con uno, etc.), obteniendo la siguiente tabla.
+
+[]() | | | | | |
+------------- | ----:| ----:| ----:| -----:| ----:|
+N° de palabrotas | 0 | 1 | 2 | 3 | 4 |
+N° de intervalos | 13 | 9 | 8 | 5 | 5 |
+[]() | | | | | |
+
+
+**a)** La hipótesis nula es que las palabrotas del político siguen una distribución de Poisson, con intensidad (lambda) uno. ¿Puedes rechazar esta hipótesis nula?
+
+**b)** Evalúe la evidencia de que el comportamiento de maldecir del político si asumimos que sigue una distribución de Poisson en general (Usa estimación de máxima verosimilitud para ajustar el valor de lambda).
