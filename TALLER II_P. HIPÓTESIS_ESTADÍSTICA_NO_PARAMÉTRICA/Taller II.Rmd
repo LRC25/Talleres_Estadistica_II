@@ -32,13 +32,41 @@ colesterol de los participantes. A un grupo de tratamiento que consta de 15 pers
 
 Comparación de medias de dos poblaciones
 
+Basados en el ejemplo 10.6, se puede emplear la prueba t agrupada. En primer lugar, se debe probar que las varianzas son iguales, por lo que se emplea la estadística F:
+
+ Hipótesis Nula:
+ $$H_0:{\sigma}_1={\sigma}_2$$
+  Hipótesis alternativa:
+ $$H_0:{\sigma}_1\ne{\sigma}_2$$
+```{r}
+tratamiento <- c(129, 131, 154, 172, 115, 126, 175, 191, 122, 238, 159, 156, 176, 175, 126)
+
+control <- c(151, 132, 196, 195, 188, 198, 187, 168, 115, 165, 137, 208, 133, 217, 191, 193, 140, 146)
+
+
+m_tratamiento = mean(tratamiento)
+sd_tratamiento = sd(tratamiento)
+m_control = mean(control)
+sd_control = sd(control)
+print(m_tratamiento)
+f=max(sd_tratamiento^2,sd_control^2)/min(sd_tratamiento^2,sd_control^2)
+print(f)
+
+```
+
+**Región crítica**
 
  $\alpha=0.05$
+
+$v_1=14$ y $v_2=17$
+$$f_{0.05}=2.27$$
  
+ 
+ De esta forma no se rechaza la hipótesis nula, es decir, se puede afirmar que las varianzas son iguales.
  Hipótesis Nula:
  $$H_0:{\mu}_1={\mu}_2$$
  Hipótesis alternativa:
- $$H_0:{\mu}_1<{\mu}_2$$
+ $$H_0:{\mu}_1-{\mu}_2<0$$
 
 ```{r}
 tratamiento <- c(129, 131, 154, 172, 115, 126, 175, 191, 122, 238, 159, 156, 176, 175, 126)
