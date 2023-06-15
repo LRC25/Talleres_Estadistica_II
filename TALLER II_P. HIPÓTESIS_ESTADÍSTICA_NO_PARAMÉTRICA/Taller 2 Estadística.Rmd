@@ -1,0 +1,290 @@
+---
+title: "Taller: Prueba de hipótesis y Estadística no Paramétrica"
+author:
+- "Daniel Mauricio Pérez Bolívar - 2200172"
+- "Daniel Jair Cañate Velasco - 2200196"
+- "Laura Rodriguez Cala - 2200168"
+output:
+ rmarkdown::html_notebook:
+   theme: lumen
+---
+
+
+### Primer ejercicio
+
+El Departamento de Salud y Educación Física de Virginia Tech realizó un estudio para determinar si 8 semanas de entrenamiento realmente reducen los niveles de
+colesterol de los participantes. A un grupo de tratamiento que consta de 15 personas se les dieron conferencias dos veces a la semana acerca de cómo reducir sus niveles de colesterol. Otro grupo de 18 personas, de edad similar, fue seleccionado al azar como grupo de control. Se registraron los siguientes niveles de colesterol de todos los participantes al final del programa de 8 semanas:
+
+| Tratamiento                         |
+|:-----------------------------------------------------------:|
+| 129 131 154 172 115 126 175 191 122 238 159 156 176 175 126 |
+
+| Control                         |
+|:-----------------------------------------------------------:|
+| 151 132 196 195 188 198 187 168 115 165 137 208 133 217 191 193 140 146 |
+
+
+
+
+
+
+**a)** ¿Podemos concluir, a un nivel de significancia del 5%, que el nivel de colesterol promedio se redujo gracias al programa? Haga la prueba adecuada en las medias. Utilice una prueba paramétrica
+
+Comparación de medias de dos poblaciones
+
+Basados en el ejemplo 10.6, se puede emplear la prueba t agrupada. En primer lugar, se debe probar que las varianzas son iguales, por lo que se emplea la estadística F:
+
+ Hipótesis Nula:
+ $$H_0:{\sigma}_1={\sigma}_2$$
+  Hipótesis alternativa:
+ $$H_0:{\sigma}_1\ne{\sigma}_2$$
+```{r}
+tratamiento <- c(129, 131, 154, 172, 115, 126, 175, 191, 122, 238, 159, 156, 176, 175, 126)
+
+control <- c(151, 132, 196, 195, 188, 198, 187, 168, 115, 165, 137, 208, 133, 217, 191, 193, 140, 146)
+
+
+m_tratamiento = mean(tratamiento)
+sd_tratamiento = sd(tratamiento)
+m_control = mean(control)
+sd_control = sd(control)
+print(m_tratamiento)
+f=max(sd_tratamiento^2,sd_control^2)/min(sd_tratamiento^2,sd_control^2)
+print(f)
+
+```
+
+**Región crítica**
+
+ $\alpha=0.05$
+
+$v_1=14$ y $v_2=17$
+$$f_{0.05}=2.27$$
+ 
+ 
+De esta forma no se rechaza la hipótesis nula, es decir, se puede afirmar que las varianzas son iguales.
+ Hipótesis Nula:
+ $$H_0:{\mu}_1={\mu}_2$$
+ Hipótesis alternativa:
+ $$H_0:{\mu}_1-{\mu}_2<0$$
+
+```{r}
+tratamiento <- c(129, 131, 154, 172, 115, 126, 175, 191, 122, 238, 159, 156, 176, 175, 126)
+
+control <- c(151, 132, 196, 195, 188, 198, 187, 168, 115, 165, 137, 208, 133, 217, 191, 193, 140, 146)
+
+
+m_tratamiento = mean(tratamiento)
+sd_tratamiento = sd(tratamiento)
+m_control = mean(control)
+sd_control = sd(control)
+print(m_tratamiento)
+print(sd_tratamiento)
+print(sd_control)
+print(m_control)
+```
+
+Ahora el siguiente paso es aplicar la prueba t agrupada:
+
+$$t=\frac{(\bar{x}_1-\bar{x}_2)-d_0}{s_p\sqrt{1/n_1+1/n_2}}$$
+Donde, $\bar{x_1}= 33.09006$, $\bar{x_2}= 30.7877$ y $d_0$
+
+Calculando $s_p$:
+$$s_p^2=\frac{{s_1}^2(n_1-1)+{s_2}^2(n_2-1)}{n_1+n_2-2}$$
+
+Reemplazando:
+$$s_p^2=\frac{{33.09006}^2(15-1)+{ 30.7877}^2(18-1)}{15+18-2}=1014.29921$$
+Entonces, $s_p=34.84801$
+
+
+
+Calculando t:
+$$t=\frac{( 156.3333-170)}{34.84801\sqrt{1/15+1/18}}=-1.12179$$
+
+```{r}
+qt(0.05, df=31, lower.tail = TRUE)
+
+```
+
+Para  $\alpha=0.05$ se tiene que la región de rechazo es $t<-1.695519$. Por esta razón no se rechaza la hipótesis.
+
+**b)** ¿Podemos concluir, a un nivel de significancia del 5%, que el nivel de colesterol promedio se redujo gracias al programa? Haga la prueba adecuada en las medias.Utilice una prueba no paramétrica
+
+Suma de rangos
+
+**c)** Compare los dos métodos en los numerales a, b. Concluya al respecto
+
+
+### Segundo ejercicio
+
+Puede encontrar un conjunto de datos que proporciona información sobre los ingresos de los ciudadanos estadounidenses en el archivo de datos de aprendizaje automático de UC Irvine, en http://archive.ics.uci.edu/ml/datasets/Adult. Cada elemento consta de un conjunto de características numéricas y categóricas que describen a una persona, junto con si su ingreso anual es mayor o menor a $50K.
+
+**a)** Evalúe la evidencia de que la categoría de ingresos es independiente del sexo
+
+Primero se plantea las hipótesis.
+
+H0: Las varibles son independientes
+H1: Las variables son dependientes
+
+Ahora se cargan el dataset y se selecciona las columnas con las que se genera la tabla de contingencia en este caso "sex" y "class".
+
+```{r}
+
+link = "http://archive.ics.uci.edu/static/public/2/adult.zip"
+archivo = tempfile()
+download.file(link, archivo)
+datos = read.table(unz(archivo, "adult.data"),header = FALSE, sep=",")
+columnas = c("age", "workclass", "fnlwgt", "education", "education-num", "marital-status", "occupation", "relationship", "race", "sex", "capital-gain", "capital-loss", "hours-per-week", "native-country", "class")
+
+colnames(datos) = columnas
+datos <- subset(datos, select = c("sex", "class"))
+
+tcontingencia <- addmargins(table(datos$sex, datos$class))
+
+print(tcontingencia)
+```
+
+Debido a que la tabla es de 2x2 se utiliza la corrección de Yates para continuidad y se procede a calcular el chicuadrado. 
+
+```{r}
+n = 32561
+observado <- c(9592, 1179, 15127, 6662)
+esperado <- c(8177.16, 2593.84, 16541.84, 5247.16)
+
+chi2 = sum((abs(observado-esperado)-0.5)**2/esperado)
+df = (2-1)*(2-1)
+
+print(chi2)
+
+```
+Debido a que el valor de chicuadrado es demasiado grande se rechaza la hipótesis nula.
+
+**b)** Evalúe la evidencia de que la categoría de ingresos es independiente del nivel educativo.
+
+Primero se plantea las hipótesis.
+
+H0: Las varibles son independientes
+H1: Las variables son dependientes
+
+Ahora se cargan el dataset y se selecciona las columnas con las que se genera la tabla de contingencia en este caso "sex" y "education".
+
+```{r}
+
+link = "http://archive.ics.uci.edu/static/public/2/adult.zip"
+archivo = tempfile()
+download.file(link, archivo)
+datos = read.table(unz(archivo, "adult.data"),header = FALSE, sep=",")
+columnas = c("age", "workclass", "fnlwgt", "education", "education-num", "marital-status", "occupation", "relationship", "race", "sex", "capital-gain", "capital-loss", "hours-per-week", "native-country", "class")
+
+colnames(datos) = columnas
+datos <- subset(datos, select = c("class", "education"))
+
+tcontingencia <- addmargins(table(datos$education, datos$class))
+
+print(tcontingencia)
+```
+
+Se procede a realizar la prueba de chicuadrado normal debido a que la tabla de contingencia es de 2x3
+
+```{r}
+
+n = 32561
+observado <- c(871, 1115, 400, 162, 317, 606, 487, 802, 1021, 3134, 107, 8826, 764, 51, 153, 5904, 62, 60, 33, 6, 16, 40, 27, 265, 361, 2221, 306, 1675, 959, 0, 423, 1387)
+esperado <- c(708.32, 892.04, 328.72, 127.54, 252.81, 490.43, 390.22, 810.05, 1049.21, 4065.46, 313.52, 7972.25, 1308.08, 38.71, 437.29, 5535.25, 224.67, 282.96, 104.26, 40.44, 80.17, 155.55, 123.76, 256.93, 332.78, 1289.52, 99.44, 2528.73, 414.91, 12.27, 138.71, 1755.73)
+
+chi2 = sum(((observado-esperado)**2)/esperado)
+df = (2-1)*(16-1)
+
+print(chi2)
+
+```
+Debido a que el valor de chicuadrado es demasiado grande se rechaza la hipótesis nula.
+
+### Tercer ejercicio
+
+Un famoso político, conocido por usar palabrotas, da una charla. Escuchas la charla, y para cada uno de los 30 intervalos de 1 minuto de duración, registras el número de palabrotas. Usted registra esto como un histograma (es decir, usted cuente el número de intervalos con cero palabrotas, con uno, etc.), obteniendo la siguiente tabla.
+
+[]() | | | | | |
+------------- | ----:| ----:| ----:| -----:| ----:|
+N° de palabrotas | 0 | 1 | 2 | 3 | 4 |
+N° de intervalos | 13 | 9 | 8 | 5 | 5 |
+[]() | | | | | |
+
+```{r}
+observados <- c(13, 9, 8, 5, 5)
+```
+
+**a)** La hipótesis nula es que las palabrotas del político siguen una distribución de Poisson, con intensidad (lambda) uno. ¿Puedes rechazar esta hipótesis nula?
+
+#### Frecuencias esperadas
+```{r}
+esperados <- dpois(0:4, lambda = 1) * sum(observados)
+
+```
+#### Estadistico chi-cuadrado
+```{r}
+chi_cuadrado <- sum((observados - esperados)^2 / esperados)
+
+```
+#### Grados libertad
+```{r}
+df <- length(observados)-1
+```
+#### Valor de p con la funcion pchisq
+```{r}
+p_value <-1 - pchisq(chi_cuadrado,df)
+```
+#### Comprobar si la hipotesis nula se rechaza o se acepta
+```{r}
+alpha <- 0.05
+
+if (p_value < alpha) {
+  print("Se rechaza la hipótesis nula, hay evidencia suficiente para afirmar que las palabrotas del político no siguen una distribución de Poisson con lambda igual a uno.")
+} else {
+  print("No se puede rechazar la hipótesis nula,no hay suficiente evidencia para afirmar que las palabrotas del político no siguen una distribución de Poisson con lambda igual a uno.")
+}
+
+```
+
+**b)** Evalúe la evidencia de que el comportamiento de maldecir del político si asumimos que sigue una distribución de Poisson en general (Usa estimación de máxima verosimilitud para ajustar el valor de lambda).
+
+#### Numero de intervalos
+```{r}
+n_intervalos <- sum(observados)
+```
+#### Funcion log-verosimilitud
+```{r}
+log_likelihood <- function(lambda) {sum(observados * log(lambda) - lambda - log(factorial(observados)))
+}
+```
+#### Max verosimilitud
+```{r}
+resultado <- optim(par = 1, fn = function(lambda) -log_likelihood(lambda), method = "Brent",lower =0 ,upper = 10)
+```
+#### Valor estimado lambda
+```{r}
+est_lambda <- resultado$par
+print(paste("Lambda estimado:",est_lambda))
+```
+#### Comparacion con lambda igual a 1
+```{r}
+lambda_1 <- 1
+```
+#### Calcular razon de verosimilitud
+```{r}
+likelihood_ratio <- log_likelihood(est_lambda) - log_likelihood(lambda_1)
+```
+#### Calcular el valor p mediante chi-cuadrado 
+```{r}
+pb_value <- 1- pchisq(2*likelihood_ratio,df=1)
+```
+#### Comparar con valor de alpha
+```{r}
+alpha <- 0.05 
+
+if (pb_value < alpha) {
+  print("Se rechaza la hipótesis nula,hay evidencia suficiente para afirmar que el comportamiento de maldecir del político no sigue una distribución de Poisson con lambda igual a uno.")
+} else {
+  print("No se puede rechazar la hipótesis nula,no hay suficiente evidencia para afirmar que el comportamiento de maldecir del político no sigue una distribución de Poisson con lambda igual a uno.")
+}
+```
