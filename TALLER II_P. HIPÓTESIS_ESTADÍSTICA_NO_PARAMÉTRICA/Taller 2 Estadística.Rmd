@@ -78,6 +78,8 @@ $$f_{0.05}=2.328952$$
 Como  $1.155156 < 2.3289522$, entonces está fuera de la zona de rechazo, de esta forma no se rechaza la hipótesis nula, es decir, se puede afirmar que las varianzas son iguales.
 
 Ahora el siguiente paso es aplicar la prueba t agrupada:
+
+Como se plantea si el colesterol promedio se redujo gracias al programa (el promedio de colesterol para los que recibieron el tratamiento debe ser menor que los que no tomaron el tratamiento) se tiene:
  Hipótesis Nula:
  $$H_0:{\mu}_1={\mu}_2$$
  Hipótesis alternativa:
@@ -115,13 +117,13 @@ Entonces, $s_p=34.84801$
 
 Calculando t:
 $$t=\frac{( 156.3333-170)}{34.84801\sqrt{1/15+1/18}}=-1.12179$$
-
+Grados de libertad: $n_1+n_2-2=31$
 ```{r}
 qt(0.05, df=31, lower.tail = TRUE)
 
 ```
 
-Para  $\alpha=0.05$ se tiene que la región de rechazo es $t<-1.695519$, debido a que el $t=-1.12179$ (está fuera de la zona de rechazo), no se rechaza la hipótesis nula, es decir, las medias son iguales.
+Para  $\alpha=0.05$ se tiene que la región de rechazo es $t<-1.695519$, debido a que el $t=-1.12179$ (está fuera de la zona de rechazo), no se rechaza la hipótesis nula, es decir, las medias son iguales, por lo que a un nivel de significancia del 5%, no se puede concluir que el nivel de colesterol promedio se redujo gracias al programa.
 
 **b)** ¿Podemos concluir, a un nivel de significancia del 5%, que el nivel de colesterol promedio se redujo gracias al programa? Haga la prueba adecuada en las medias.Utilice una prueba no paramétrica
 
@@ -172,9 +174,11 @@ Ahora, calculando $u_1$ y $u_2$
 
 $$u_1=w_1-\frac{n_1(n_1+1)}{2}=92$$
 $$u_1=w_2-\frac{n_2(n_2+1)}{2}=178$$
-A partir de la tabla se tiene que para $n_1=15$ y $n_2=18$ se rechaza la hipótesis nula de medias iguales cuando $n_1\le88$. Como $u_1=92$ entonces no se puede rechazar la hipótesis nula, es decir, las medias son iguales.
+A partir de la tablapara el estadístico $U_1$ se tiene que para $n_1=15$ y $n_2=18$ se rechaza la hipótesis nula de medias iguales cuando $u_1\le88$. Como $u_1=92$ entonces no se puede rechazar la hipótesis nula, es decir, las medias son iguales, por lo que a un nivel de significancia del 5%, no se puede concluir que el nivel de colesterol promedio se redujo gracias al programa.
 
-**c)** Compare los dos métodos en los numerales a, b. Concluya al respecto
+**c)** Compare los dos métodos en los numerales a, b. Concluya al respecto.
+
+Tanto para la prueba paramétrica como para la no paramétrica se obtiene que no se rechaza la hipótesis nula, es decir las medias son iguales, por lo que, a un nivel de significancia del 5%, no se puede concluir que el nivel de colesterol promedio se redujo gracias al programa.Sin embargo, en términos de practicidad en los cálculos y el planteamiento, puede decirse que la prueba no paramétrica es una mejor alternativa, además para la prueba t agrupada se tiene la suposición de normalidad y la igualdad de las varianzas (la cuál se demuestra), mientras que con la suma de rangos de Wilcoxon no se asume ninguna distribución. Finalmente, el tamaño de cada una de las muestras influye en la elección de los estadísticos de prueba.
 
 
 ### Segundo ejercicio
