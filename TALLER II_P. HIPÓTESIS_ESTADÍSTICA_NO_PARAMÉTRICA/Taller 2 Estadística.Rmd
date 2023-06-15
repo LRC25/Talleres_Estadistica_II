@@ -30,9 +30,12 @@ colesterol de los participantes. A un grupo de tratamiento que consta de 15 pers
 
 **a)** ¿Podemos concluir, a un nivel de significancia del 5%, que el nivel de colesterol promedio se redujo gracias al programa? Haga la prueba adecuada en las medias. Utilice una prueba paramétrica
 
+
+ 
+
 Comparación de medias de dos poblaciones
 
-Basados en el ejemplo 10.6, se puede emplear la prueba t agrupada. En primer lugar, se debe probar que las varianzas son iguales, por lo que se emplea la estadística F:
+Basados en el ejemplo 10.6 (Libro de Walpole), se puede emplear la prueba t agrupada. En primer lugar, se debe probar que las varianzas son iguales, por lo que se emplea la estadística F:
 
  Hipótesis Nula:
  $$H_0:{\sigma}_1={\sigma}_2$$
@@ -49,24 +52,36 @@ sd_tratamiento = sd(tratamiento)
 m_control = mean(control)
 sd_control = sd(control)
 print(m_tratamiento)
-f=max(sd_tratamiento^2,sd_control^2)/min(sd_tratamiento^2,sd_control^2)
-print(f)
+
 
 ```
+Calculando el valor de $f$:
+```{r}
+f=max(sd_tratamiento^2,sd_control^2)/min(sd_tratamiento^2,sd_control^2)
+print(f)
+```
+
 
 **Región crítica**
 
  $\alpha=0.05$
 
 $v_1=14$ y $v_2=17$
-$$f_{0.05}=2.27$$
+```{r}
+qf(0.05,df1=14, df2=17,lower.tail = FALSE) 
+```
+$$f_{0.05}=2.328952$$
+
+
  
  
-De esta forma no se rechaza la hipótesis nula, es decir, se puede afirmar que las varianzas son iguales.
+Como  $1.155156 < 2.3289522$, entonces está fuera de la zona de rechazo, de esta forma no se rechaza la hipótesis nula, es decir, se puede afirmar que las varianzas son iguales.
+
+Ahora el siguiente paso es aplicar la prueba t agrupada:
  Hipótesis Nula:
  $$H_0:{\mu}_1={\mu}_2$$
  Hipótesis alternativa:
- $$H_0:{\mu}_1-{\mu}_2<0$$
+ $$H_1:{\mu}_1-{\mu}_2<0$$
 
 ```{r}
 tratamiento <- c(129, 131, 154, 172, 115, 126, 175, 191, 122, 238, 159, 156, 176, 175, 126)
@@ -84,10 +99,10 @@ print(sd_control)
 print(m_control)
 ```
 
-Ahora el siguiente paso es aplicar la prueba t agrupada:
+
 
 $$t=\frac{(\bar{x}_1-\bar{x}_2)-d_0}{s_p\sqrt{1/n_1+1/n_2}}$$
-Donde, $\bar{x_1}= 33.09006$, $\bar{x_2}= 30.7877$ y $d_0$
+Donde, $\bar{x_1}= 33.09006$, $\bar{x_2}= 30.7877$ y $d_0=0$
 
 Calculando $s_p$:
 $$s_p^2=\frac{{s_1}^2(n_1-1)+{s_2}^2(n_2-1)}{n_1+n_2-2}$$
@@ -106,11 +121,58 @@ qt(0.05, df=31, lower.tail = TRUE)
 
 ```
 
-Para  $\alpha=0.05$ se tiene que la región de rechazo es $t<-1.695519$. Por esta razón no se rechaza la hipótesis.
+Para  $\alpha=0.05$ se tiene que la región de rechazo es $t<-1.695519$, debido a que el $t=-1.12179$ (está fuera de la zona de rechazo), no se rechaza la hipótesis nula, es decir, las medias son iguales.
 
 **b)** ¿Podemos concluir, a un nivel de significancia del 5%, que el nivel de colesterol promedio se redujo gracias al programa? Haga la prueba adecuada en las medias.Utilice una prueba no paramétrica
 
-Suma de rangos
+Para este caso se realiza la suma de rangos de Wilcoxon:
+
+
+ Hipótesis Nula:
+ $$H_0:\tilde{\mu}_1=\tilde{\mu}_2$$
+  Hipótesis alternativa:
+$$H_1:\tilde{\mu}_1<\tilde{\mu}_2$$
+
+
+$n_1=15$ (Número de observaciones de la muestra más pequeña)
+
+$n_2=18$ (Número de observaciones de la muestra más pequeña)
+
+
+Ahora se ordenan las muestras combinadas en orden ascendente
+
+```{r}
+datos_c = c()
+datos_c = append(datos_c,tratamiento)
+datos_c = append(datos_c,control)
+
+v_ord=sort(datos_c)
+print(v_ord)
+
+```
+
+
+```{r}
+rangos <- rank(abs(v_ord[v_ord != 0]))
+print(rangos)
+```
+A partir de los rangos hallados se calcula $w_1$ y $w_2$
+
+$w_1$:suma de los rangos que corresponden a las $n_1$ observaciones en la muestra más pequeña.
+$$w_1=1.5+3+4.5+4.5+6+7+14+15+16+19+20.5+20.5+22+25.5+33$$
+```{r}
+w_1=1.5+3+4.5+4.5+6+7+14+15+16+19+20.5+20.5+22+25.5+33
+print(w_1)
+```
+Para calcular $w_2$ se tiene:
+
+$$w_2=\frac{(n_1+n_2)(n_1+n_2+1)}{2}-w_1$$
+$$w_2=\frac{(15+18)(15+18+1)}{2}-212=349$$
+Ahora, calculando $u_1$ y $u_2$
+
+$$u_1=w_1-\frac{n_1(n_1+1)}{2}=92$$
+$$u_1=w_2-\frac{n_2(n_2+1)}{2}=178$$
+A partir de la tabla se tiene que para $n_1=15$ y $n_2=18$ se rechaza la hipótesis nula de medias iguales cuando $n_1\le88$. Como $u_1=92$ entonces no se puede rechazar la hipótesis nula, es decir, las medias son iguales.
 
 **c)** Compare los dos métodos en los numerales a, b. Concluya al respecto
 
