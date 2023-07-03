@@ -1,0 +1,51 @@
+---
+title: "Taller III: Regresión Lineal"
+author:
+- "Daniel Mauricio Pérez Bolívar - 2200172"
+- "Daniel Jair Cañate Velasco - 2200196"
+- "Laura Rodriguez Cala - 2200168"
+output:
+ rmarkdown::html_notebook:
+   theme: lumen
+---
+
+
+### Primer ejercicio
+
+En http://www.statsci.org/data/oz/physical.html, se encuentra un conjunto de datos de mediciones realizadas por M. Larner en 1996. Estas medidas incluyen la masa corporal y varios diámetros. 
+
+
+
+**a)** Construya una regresión lineal para predecir la masa corporal a partir de estos diámetros. Grafique el residuo contra los valores ajustados para su regresión
+
+**b)** Ahora haga una regresión de la raíz cúbica de la masa contra estos diámetros. Grafique el residual contra los valores ajustados en los dos sistemas de coordenadas: las coordenadas de la raíz cúbica y en las coordenadas originales.
+
+**c)** Analice los resultados obtenidos, y use los diagramas obtenidos en los numerales a y en b para explicar qué regresión es mejor. Realice la explicación de forma clara y justifique su respuesta
+
+
+
+
+### Segundo ejercicio
+
+Se efectuó un estudio para determinar si el género del titular de la tarjeta de crédito era un factor importante en la generación de utilidades para cierta empresa de tarjetas de crédito. Las variables consideradas fueron el ingreso, el número de miembros de la familia y el género del titular de la tarjeta. Los datos son los siguientes:
+
+![](table.jpg)
+
+**a)** Ajuste un modelo de regresión lineal usando las variables disponibles. Con
+base en el modelo ajustado, ¿la empresa preferiría clientes del género
+masculino o del femenino?
+
+**b)** ¿Diría usted que el ingreso fue un factor importante para explicar la
+variabilidad de la utilidad?
+
+
+
+
+
+
+
+
+
+
+
+
