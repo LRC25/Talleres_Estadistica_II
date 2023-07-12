@@ -18,6 +18,9 @@ En http://www.statsci.org/data/oz/physical.html, se encuentra un conjunto de dat
 
 **a)** Construya una regresión lineal para predecir la masa corporal a partir de estos diámetros. Grafique el residuo contra los valores ajustados para su regresión
 
+
+
+
 **b)** Ahora haga una regresión de la raíz cúbica de la masa contra estos diámetros. Grafique el residual contra los valores ajustados en los dos sistemas de coordenadas: las coordenadas de la raíz cúbica y en las coordenadas originales.
 
 **c)** Analice los resultados obtenidos, y use los diagramas obtenidos en los numerales a y en b para explicar qué regresión es mejor. Realice la explicación de forma clara y justifique su respuesta
@@ -34,6 +37,20 @@ Se efectuó un estudio para determinar si el género del titular de la tarjeta d
 **a)** Ajuste un modelo de regresión lineal usando las variables disponibles. Con
 base en el modelo ajustado, ¿la empresa preferiría clientes del género
 masculino o del femenino?
+
+
+```{r}
+utilidad <- c(157,-181, -253, 158, 75, 202, -451, 146, 89, -357, 522, 78, 5, -177, 123, 251, -56, 453, 288, -104) 
+ingreso<- c(45000, 55000, 45800, 38000, 75000, 99750, 28000, 39000, 54350, 32500, 36750, 42500, 34250, 36750, 24500, 27500, 18000, 24500, 88750, 19750) 
+genero<- c(0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1)
+n_familia<- c(1,2,4,3,4,4,1,2,1,1,1,3,2,3,2,1,1,1,1,2)
+
+output = lm(utilidad~ingreso+genero+n_familia)
+summary(output)
+
+plot(data$x, data$y, type='p')
+abline(regresion)
+```
 
 **b)** ¿Diría usted que el ingreso fue un factor importante para explicar la
 variabilidad de la utilidad?
