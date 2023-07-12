@@ -19,8 +19,11 @@ En http://www.statsci.org/data/oz/physical.html, se encuentra un conjunto de dat
 **a)** Construya una regresión lineal para predecir la masa corporal a partir de estos diámetros. Grafique el residuo contra los valores ajustados para su regresión
 
 
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
 **b)** Ahora haga una regresión de la raíz cúbica de la masa contra estos diámetros. Grafique el residual contra los valores ajustados en los dos sistemas de coordenadas: las coordenadas de la raíz cúbica y en las coordenadas originales.
 
 **c)** Analice los resultados obtenidos, y use los diagramas obtenidos en los numerales a y en b para explicar qué regresión es mejor. Realice la explicación de forma clara y justifique su respuesta
