@@ -1,0 +1,129 @@
+---
+title: "Taller Series de tiempo"
+author: "Daniel Perez"
+date: "2023-07-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(astsa)
+library(tseries)
+library(ggplot2)
+```
+
+
+## Punto 1
+
+Considere las dos series de tiempo:
+$$x_{t}=w_{t}$$
+$$y_{t}=w_{t}-\theta_{t-1}+u_{t}$$
+Donde $w_{t}$ y $u_{t}$ son dos series con ruido blanco con varianzas $σ_{w^{2}} = 2$ y $σ_{u^{2}} = 1$ respectivamente y $\theta=0.7$. Implemente en R un proceso estocástico para generar las dos series (con 300 observaciones cada una) y obtenga la función de autocorrelación para la serie y. Posteriormente determine la función de correlación cruzada para las series x y y. Verifique que es posible determinar correctamente si una serie lidera a la otra.
+
+Obtenemos las series de tiempo
+```{r}
+w = rnorm(300,0,2)
+u = rnorm(300,0,1)
+x = w
+y = w-0.7+u
+par(mfrow=c(2,1))
+plot.ts(x, main="Ruido blanco xt", xlab="Tiempo", ylab = "w (salida)")
+plot.ts(y, main="Ruido blanco yt", xlab="Tiempo", ylab = "v (salida)")
+```
+
+Ahora se sacan las funciones de coorelacion
+```{r}
+par(mfrow=c(1,2))
+acf_y <- acf(y, lag.max = 300, plot = TRUE)
+ccf_xy <- ccf(x, y, lag.max = 300, plot = TRUE)
+```
+
+Los valores significativos que sobre salen son los de la regresion x la serie x lidera sobre la y
+
+## Punto 2
+
+Use al menos dos técnicas diferentes expuestas en la sección 2.3 “Smoothing in the Time Series Context” del libro de Shumway [1], para estimar una línea de tendencia para la serie de temperatura global (En R, para acceder a los datos utilice la librería astsa. Los datos están almacenados en la variable globtemp). Compare los resultados y comente las ventajas y desventajas de usar cada una de las técnicas.
+
+```{r}
+
+plot(globtemp, type="o", ylab="Desviaciones de temperatura global", xlab='Tiempo')
+
+```
+
+## Punto 3
+
+Considere las dos series de tiempo semanales de petróleo y gasolina. La serie del petróleo está en dólares por barril, mientras que la serie de gasolina está en centavos por galón (En R, para acceder a los datos utilice la librería astsa. Los datos están almacenados en las variables oil y gas).
+
+```{r}
+serie1 = oil
+serie2 = gas
+par(mfrow=c(1,2))
+plot(serie1, ylab="Petroleo", xlab='Tiempo')
+plot(serie2, ylab="Gasolina", xlab='Tiempo')
+```
+
+
+(a) ¿Las series son estacionarias? Comente su resultado. ¿Cómo puede probar que lo son? Realice una prueba.
+
+```{r}
+result_serie1 <- adf.test(serie1)
+result_serie2 <- adf.test(serie2)
+
+print("Resultados para serie1:")
+print(result_serie1)
+print("Resultados para serie2:")
+print(result_serie2)
+
+```
+
+Segun los p values obtenidos en las pruebas la serie 1 (petroleo) es estacionaria mientra que la serie 2 (Gasolina) no es estacionaria.
+
+(b) En economía, a menudo es el cambio porcentual en el precio (denominado tasa de crecimiento o retorno), en lugar del cambio de precio absoluto, lo que es importante. Utilice la transformación de la forma $y_{t} = ∇ log x_{t}$ donde $x_{t}$ es la serie de precios del petróleo o de gasolina.
+
+```{r}
+
+log_serie1 = log(serie1)
+log_diff_serie1 = diff(log_serie1)
+
+log_serie2 = log(serie2)
+log_diff_serie2 = diff(log_serie2)
+
+```
+
+
+(c) Grafique lado a lado los datos de petróleo y gasolina transformados en el numeral (b). ¿Qué le llama la atención?
+
+```{r}
+
+par(mfrow=c(1,2))
+plot(log_diff_serie1, ylab="Transformada de Petroleo", xlab='Tiempo')
+plot(log_diff_serie2, ylab="Transformada de Gasolina", xlab='Tiempo')
+
+```
+
+Podemos observar que se estabilizaron las varianzas, ademas de que se estabilizo la tendencia.
+
+(d) Grafique los coeficientes de la función de autocorrelación simple (ACF) para los datos transformados de las dos series. Comente los resultados
+
+```{r}
+
+par(mfrow=c(1,2))
+acf_result1 <- acf(log_diff_serie1)
+acf_result2 <- acf(log_diff_serie2)
+
+```
+
+
+(e) Grafique la función de autocorrelación cruzada de las dos series transformadas, y comente si existen valores significativos en los coeficientes. ¿Los precios del gas lideran el precio del petróleo?
+
+```{r}
+
+autorelacion <- ccf(log_diff_serie1, log_diff_serie2)
+
+```
+
+Los valores significativos que sobre salen son los del petroleo por ende el precio del petroleo lidera el precio de la gasolina
+
